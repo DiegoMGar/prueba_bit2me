@@ -2,21 +2,20 @@ import fetch from 'node-fetch';
 import config from '../../config/coingmarketcap.config.js'
 
 
-export class Cryptocurrency {
+export class CryptocurrencyInterval {
   constructor() {
-    this.url = 'https://web-api.coinmarketcap.com/v1/cryptocurrency/quotes/historical?';
+    this.url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?';
   }
 
   run(input) {
-    console.log("Using Cryptocurrency");
+    console.log("Using CryptocurrencyInterval");
     return true;
   }
 
   fetchCurrency(id) {
     const params = {
-      id,
-      convert: 'USD',
-      format: 'chart_crypto_details',
+      symbol:"BTC,ETH",
+      convert: 'EUR',
     }
     let url = this.url;
     Object.keys(params).forEach(key => {
