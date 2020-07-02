@@ -9,7 +9,7 @@ Se pretende afrontar la prueba con:
 - Persistencia en mongo y redis
 - Mensajería por email
 - Websockets
-- Testing con mocha
+- Testing con chai
 
 ## External api
 
