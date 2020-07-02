@@ -11,10 +11,23 @@
     "type": "git",
     "url": "git+https://github.com/DiegoMGar/prueba_bittome.git"
   },
+  "type": "module",
   "author": "Diego Maroto",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/DiegoMGar/prueba_bittome/issues"
   },
-  "homepage": "https://github.com/DiegoMGar/prueba_bittome#readme"
+  "homepage": "https://github.com/DiegoMGar/prueba_bittome#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.0",
+    "swagger-ui-express": "^4.1.4"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.6",
+    "@types/express": "^4.17.6",
+    "@types/node-fetch": "^2.5.7"
+  }
 }
