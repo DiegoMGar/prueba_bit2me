@@ -32,12 +32,17 @@ app.listen(3000, function () {
 console.log("Timestamp fetching prices");
 
 const cryptocurrencyInterval = new CryptocurrencyInterval();
-setTimeout(() => {
+cryptoRequest();
+
+function cryptoRequest() {
+  setTimeout(() => {
+    cryptoRequest();
+  }, 60000);
   cryptocurrencyInterval.fetchCurrency(1)
     .then(data => {
-      console.log("Retrieved crypto");
-      console.log(data);
+      console.log("Retrieved crypto", data.status.timestamp);
       const writeFileRepository = new WriteFileRepository();
-      writeFileRepository.put('example.json', data);
+      writeFileRepository.put('BTC.json', data.data.BTC.quote);
+      writeFileRepository.put('ETH.json', data.data.ETH.quote);
     });
-}, 5000);
+}
