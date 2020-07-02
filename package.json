@@ -1,0 +1,20 @@
+{
+  "name": "prueba_bittome",
+  "version": "1.0.0",
+  "description": "Prueba técnica de Bit2me",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "node src/main.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DiegoMGar/prueba_bittome.git"
+  },
+  "author": "Diego Maroto",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DiegoMGar/prueba_bittome/issues"
+  },
+  "homepage": "https://github.com/DiegoMGar/prueba_bittome#readme"
+}
