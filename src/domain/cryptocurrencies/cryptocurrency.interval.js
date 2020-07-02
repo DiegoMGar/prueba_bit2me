@@ -4,7 +4,7 @@ import config from '../../config/coingmarketcap.config.js'
 
 export class CryptocurrencyInterval {
   constructor() {
-    this.url = 'https://web-api.coinmarketcap.com/v1/cryptocurrency/quotes/historical?';
+    this.url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?';
   }
 
   run(input) {
@@ -14,9 +14,8 @@ export class CryptocurrencyInterval {
 
   fetchCurrency(id) {
     const params = {
-      id,
-      convert: 'USD',
-      format: 'chart_crypto_details',
+      symbol:"BTC,ETH",
+      convert: 'EUR',
     }
     let url = this.url;
     Object.keys(params).forEach(key => {

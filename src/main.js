@@ -4,6 +4,8 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import {GetCryptos} from "./app/api/coinmarketcap/request.crypto.js";
+import {CryptocurrencyInterval} from "./domain/cryptocurrencies/cryptocurrency.interval.js";
+import {WriteFileRepository} from "./domain/repositories/files/write.js";
 
 const app = express();
 const router = express.Router();
@@ -26,3 +28,16 @@ app.use('/', router);
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!');
 });
+
+console.log("Timestamp fetching prices");
+
+const cryptocurrencyInterval = new CryptocurrencyInterval();
+setTimeout(() => {
+  cryptocurrencyInterval.fetchCurrency(1)
+    .then(data => {
+      console.log("Retrieved crypto");
+      console.log(data);
+      const writeFileRepository = new WriteFileRepository();
+      writeFileRepository.put('example.json', data);
+    });
+}, 5000);

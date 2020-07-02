@@ -1,0 +1,82 @@
+{
+  "status": {
+    "timestamp": "2020-07-02T17:18:24.121Z",
+    "error_code": 0,
+    "error_message": null,
+    "elapsed": 9,
+    "credit_count": 1,
+    "notice": null
+  },
+  "data": {
+    "BTC": {
+      "id": 1,
+      "name": "Bitcoin",
+      "symbol": "BTC",
+      "slug": "bitcoin",
+      "num_market_pairs": 8320,
+      "date_added": "2013-04-28T00:00:00.000Z",
+      "tags": [
+        "mineable",
+        "state-channels",
+        "sha-256",
+        "privacy",
+        "pow",
+        "store-of-value"
+      ],
+      "max_supply": 21000000,
+      "circulating_supply": 18421043,
+      "total_supply": 18421043,
+      "is_active": 1,
+      "platform": null,
+      "cmc_rank": 1,
+      "is_fiat": 0,
+      "last_updated": "2020-07-02T17:17:26.000Z",
+      "quote": {
+        "EUR": {
+          "price": 8070.101533626269,
+          "volume_24h": 14405358766.777975,
+          "percent_change_1h": -0.35343827,
+          "percent_change_24h": -2.0649988,
+          "percent_change_7d": -2.37005254,
+          "market_cap": 148659687365.29547,
+          "last_updated": "2020-07-02T17:17:00.000Z"
+        }
+      }
+    },
+    "ETH": {
+      "id": 1027,
+      "name": "Ethereum",
+      "symbol": "ETH",
+      "slug": "ethereum",
+      "num_market_pairs": 5100,
+      "date_added": "2015-08-07T00:00:00.000Z",
+      "tags": [
+        "crowdfunding",
+        "pow",
+        "medium-of-exchange",
+        "mineable",
+        "smart-contracts",
+        "ethash"
+      ],
+      "max_supply": null,
+      "circulating_supply": 111593067.124,
+      "total_supply": 111593067.124,
+      "is_active": 1,
+      "platform": null,
+      "cmc_rank": 2,
+      "is_fiat": 0,
+      "last_updated": "2020-07-02T17:17:25.000Z",
+      "quote": {
+        "EUR": {
+          "price": 201.92193285611677,
+          "volume_24h": 5602789147.819068,
+          "percent_change_1h": 0.05248514,
+          "percent_change_24h": -1.7414313,
+          "percent_change_7d": -3.17927421,
+          "market_cap": 22533087807.02046,
+          "last_updated": "2020-07-02T17:17:00.000Z"
+        }
+      }
+    }
+  }
+}
