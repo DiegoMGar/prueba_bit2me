@@ -9,7 +9,6 @@ describe("Testing mongodb connection", function () {
         return CMongodb.readBySymbol("BTC")
       })
       .then((data) => {
-        console.log(data);
         chai.expect(data).to.be.an("array");
         chai.expect(data.length).to.be.greaterThan(0);
         chai.expect(data[0].symbol).to.be.eq("BTC");
@@ -18,9 +17,8 @@ describe("Testing mongodb connection", function () {
       .then(() => {
         done();
       })
-      .catch(() => {
-        chai.assert.fail('Failed connection');
-        CMongodb.disconnect();
+      .catch((err) => {
+        chai.assert.fail(err);
         done(1);
       })
   });

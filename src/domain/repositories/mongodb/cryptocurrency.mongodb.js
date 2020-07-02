@@ -18,15 +18,18 @@ export default class CryptocurrencyMongodb {
   }
 
   /**
-   *
-   * @returns {Model<Document>}
+   * Makes the model static, mongoose fatal fails if
+   *  it declares the same model more than one time.
    */
   getCryptoModel() {
-    return mongoose.model('Cryptocurrency', {
-      symbol: String,
-      price: Number,
-      timestamp: String
-    });
+    if (!CryptocurrencyMongodb.CryptocurrencyModel) {
+      CryptocurrencyMongodb.CryptocurrencyModel = mongoose.model('Cryptocurrency', {
+        symbol: String,
+        price: Number,
+        timestamp: String
+      });
+    }
+    return CryptocurrencyMongodb.CryptocurrencyModel;
   }
 
   readBySymbol(symbol) {
