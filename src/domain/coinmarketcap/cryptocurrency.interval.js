@@ -12,7 +12,7 @@ export class CryptocurrencyInterval {
     return true;
   }
 
-  fetchCurrency(id) {
+  fetchCurrency() {
     const params = {
       symbol:"BTC,ETH",
       convert: 'EUR',

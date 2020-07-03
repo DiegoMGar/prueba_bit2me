@@ -3,9 +3,9 @@ import swaggerDocument from './swagger/swagger.js';
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import {GetCryptos} from "./app/api/coinmarketcap/request.crypto.js";
-import {CryptocurrencyInterval} from "./domain/cryptocurrencies/cryptocurrency.interval.js";
-import CryptocurrencyRedis from "./domain/repositories/redis/cryptocurrency.redis.js";
+import {CryptocurrencyInterval} from "./domain/coinmarketcap/cryptocurrency.interval.js";
+import {Historical} from "./app/api/cryptocurrencies/historical.js";
+import CryptocurrencyMongodb from "./domain/repositories/mongodb/cryptocurrency.mongodb.js";
 
 const app = express();
 const router = express.Router();
@@ -21,8 +21,8 @@ router.get('/', function (req, res) {
   res.send({msg: 'Esta es la prueba técnica de Bit2me'});
 });
 
-const getCryptos = new GetCryptos(router, '/cryptos');
-getCryptos.configure('get');
+const historical = new Historical(router, '/api/historical/:symbol');
+historical.configure('get');
 
 app.use('/', router);
 app.listen(3000, function () {
@@ -41,22 +41,22 @@ function cryptoRequest() {
   cryptocurrencyInterval.fetchCurrency(1)
     .then(data => {
       console.log("Retrieved crypto", data.status.timestamp);
-      const CRedis = new CryptocurrencyRedis();
-      CRedis.connect()
+      const mongoRepo = new CryptocurrencyMongodb();
+      mongoRepo.connect()
         .then(() => {
-          const btc = {...data.data.BTC.quote};
+          const btc = {...data.data.BTC.quote.EUR};
           btc.symbol = "BTC";
-          const eth = {...data.data.ETH.quote};
+          const eth = {...data.data.ETH.quote.EUR};
           eth.symbol = "ETH";
           return Promise.all([
-            CRedis.writeOne(btc),
-            CRedis.writeOne(eth)
+            mongoRepo.writeOne(btc),
+            mongoRepo.writeOne(eth)
           ])
         })
         .then((results) => {
-          console.log("Prices written")
+          console.log("Prices written\n", JSON.stringify(results, null, 2));
         })
-        .catch((err)=>{
+        .catch((err) => {
           console.log("Error writing new prices");
           console.log(err);
         })

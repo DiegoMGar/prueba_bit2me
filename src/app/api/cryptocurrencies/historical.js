@@ -1,4 +1,4 @@
-export class GetCryptos {
+export class Historical {
   constructor(router, path) {
     this.router = router;
     this.path = path;
@@ -9,7 +9,12 @@ export class GetCryptos {
   }
 
   handler(request, response) {
-    const domainGetCryptosResolver = {name: 'GetCryptos'};
-    response.send(domainGetCryptosResolver);
+    const symbol = request.params.symbol;
+    if (!symbol) {
+      response.status(400);
+      response.send({msg: "Symbol needed"});
+      return;
+    }
+
   }
 }
