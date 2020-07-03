@@ -15,8 +15,8 @@ describe("Testing mongodb write elements", function () {
           percent_change_1h: -0.35343827,
           percent_change_24h: -2.0649988,
           percent_change_7d: -2.37005254,
-          marketCap: 148659687365.29547,
-          timestamp: date.toISOString()
+          market_cap: 148659687365.29547,
+          last_updated: date.toISOString()
         })
       })
       .then((data) => {

@@ -60,5 +60,8 @@ function cryptoRequest() {
           console.log("Error writing new prices");
           console.log(err);
         })
+    })
+    .catch(err => {
+      console.log(err);
     });
 }

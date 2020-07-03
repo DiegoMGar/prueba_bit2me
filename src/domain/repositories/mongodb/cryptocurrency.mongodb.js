@@ -70,8 +70,8 @@ export default class CryptocurrencyMongodb {
         symbol: data.symbol,
         price: data.price,
         volume_24h: data.volume,
-        market_cap: data.marketCap,
-        last_updated: data.timestamp
+        market_cap: data.market_cap,
+        last_updated: data.last_updated
       });
     return crypto.save();
   }

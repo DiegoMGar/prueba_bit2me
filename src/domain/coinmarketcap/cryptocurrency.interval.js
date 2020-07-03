@@ -31,7 +31,8 @@ export class CryptocurrencyInterval {
     };
     return fetch(url, options)
       .then(response => {
-        return response.json();
+        if(response.status.toString().startsWith('2')) return response.json();
+        throw Error("Error retrieving prices from coinmarketcap");
       });
   }
 }
