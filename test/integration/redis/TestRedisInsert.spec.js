@@ -6,7 +6,7 @@ describe("Testing mongodb connection", function () {
     const CRedis = new CryptocurrencyRedis();
     CRedis.connect()
       .then(() => {
-        return CRedis.writeOne({
+        return CRedis.write("BTC", {
           symbol: "BTC",
           price: 100.00,
           timestamp: new Date().toISOString()

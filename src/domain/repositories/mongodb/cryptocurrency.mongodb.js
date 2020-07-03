@@ -60,7 +60,10 @@ export default class CryptocurrencyMongodb {
     const now = new Date();
     now.setTime(now.getTime() - (seconds * 1000));
     console.log("Searching gte", now.toISOString());
-    return this.find({symbol, last_updated: {$gte: now.toISOString()}});
+    return this.find({symbol, last_updated: {$gte: now.toISOString()}})
+      .then((data)=>{
+        return Promise.resolve(data.map(elem=>elem.toObject()));
+      });
   }
 
   writeOne(data) {

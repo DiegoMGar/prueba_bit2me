@@ -1,4 +1,4 @@
-import CryptocurrencyMongodb from "../../repositories/mongodb/cryptocurrency.mongodb";
+import CryptocurrencyMongodb from "../../repositories/mongodb/cryptocurrency.mongodb.js";
 
 export class MongoCryptocurrenciesService {
 
@@ -17,7 +17,16 @@ export class MongoCryptocurrenciesService {
       throw Error("Symbol must be string");
     }
     const mongoRepo = new CryptocurrencyMongodb();
-    return mongoRepo.connect()
-      .then(() => mongoRepo.readBySymbolElapsedTime(symbol, this.config.minutesElapsedQuery * 60));
+    return new Promise((resolve, reject) => {
+      mongoRepo.connect()
+        .then(() => {
+          return mongoRepo.readBySymbolElapsedTime(symbol, this.config.minutesElapsedQuery * 60);
+        })
+        .then((data) => {
+          resolve(data);
+          mongoRepo.disconnect();
+        })
+        .catch((err) => reject(err));
+    });
   }
 }

@@ -14,7 +14,7 @@ export class CryptocurrencyInterval {
 
   fetchCurrency() {
     const params = {
-      symbol:"BTC,ETH",
+      symbol: "BTC,ETH",
       convert: 'EUR',
     }
     let url = this.url;
@@ -31,8 +31,8 @@ export class CryptocurrencyInterval {
     };
     return fetch(url, options)
       .then(response => {
-        if(response.status.toString().startsWith('2')) return response.json();
-        throw Error("Error retrieving prices from coinmarketcap");
+        if (response.status.toString().startsWith('2')) return response.json();
+        throw Error("Error retrieving prices from coinmarketcap: " + response.status);
       });
   }
 }

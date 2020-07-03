@@ -11,7 +11,31 @@ export class CacheCryptocurrenciesService {
       throw Error("Symbol must be string");
     }
     const redisRepo = new CryptocurrencyRedis();
-    return redisRepo.connect()
-      .then(() => redisRepo.readBySymbol(symbol));
+    return new Promise((resolve, reject) => {
+      redisRepo.connect()
+        .then(() => {
+          return redisRepo.readBySymbol(symbol);
+        })
+        .then((data) => {
+          resolve(data);
+          redisRepo.disconnect();
+        })
+        .catch((err) => reject(err));
+    });
+  }
+
+  cacheSymbol(symbol, data) {
+    const redisRepo = new CryptocurrencyRedis();
+    redisRepo.connect()
+      .then(() => {
+        return redisRepo.write(symbol, data);
+      })
+      .then(() => {
+        console.log("Data successfuly cached");
+        redisRepo.disconnect();
+      })
+      .catch((err) => {
+        console.log("Error caching", err);
+      });
   }
 }
