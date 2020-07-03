@@ -20,8 +20,8 @@ describe("Testing mongodb connection", function () {
       .then(() => {
         done();
       })
-      .catch(() => {
-        chai.assert.fail('Failed connection');
+      .catch((err) => {
+        chai.assert.fail(err);
         CMongodb.disconnect();
         done(1);
       });
