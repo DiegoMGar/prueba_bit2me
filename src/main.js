@@ -5,7 +5,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import {GetCryptos} from "./app/api/coinmarketcap/request.crypto.js";
 import {CryptocurrencyInterval} from "./domain/cryptocurrencies/cryptocurrency.interval.js";
-import {WriteFileRepository} from "./domain/repositories/files/write.js";
+import CryptocurrencyRedis from "./domain/repositories/redis/cryptocurrency.redis.js";
 
 const app = express();
 const router = express.Router();
@@ -41,8 +41,24 @@ function cryptoRequest() {
   cryptocurrencyInterval.fetchCurrency(1)
     .then(data => {
       console.log("Retrieved crypto", data.status.timestamp);
-      const writeFileRepository = new WriteFileRepository();
-      writeFileRepository.put('BTC.json', data.data.BTC.quote);
-      writeFileRepository.put('ETH.json', data.data.ETH.quote);
+      const CRedis = new CryptocurrencyRedis();
+      CRedis.connect()
+        .then(() => {
+          const btc = {...data.data.BTC.quote};
+          btc.symbol = "BTC";
+          const eth = {...data.data.ETH.quote};
+          eth.symbol = "ETH";
+          return Promise.all([
+            CRedis.writeOne(btc),
+            CRedis.writeOne(eth)
+          ])
+        })
+        .then((results) => {
+          console.log("Prices written")
+        })
+        .catch((err)=>{
+          console.log("Error writing new prices");
+          console.log(err);
+        })
     });
 }

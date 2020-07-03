@@ -28,35 +28,27 @@ export default class CryptocurrencyRedis {
     })
   }
 
-  /**
-   * Makes the model static, mongoose fatal fails if
-   *  it declares the same model more than one time.
-   */
-  getCryptoModel() {
-    if (!CryptocurrencyMongodb.CryptocurrencyModel) {
-      CryptocurrencyMongodb.CryptocurrencyModel = mongoose.model('Cryptocurrency', {
-        symbol: String,
-        price: Number,
-        timestamp: String
-      });
-    }
-    return CryptocurrencyMongodb.CryptocurrencyModel;
-  }
-
   readBySymbol(symbol) {
     return new Promise((resolve, reject) => {
-      this.client.lrange(symbol, 0,100,function (err, data) {
+      this.client.lrange(symbol, 0, 100, function (err, data) {
         if (err) reject(err);
-        else resolve(data.map(elem=>JSON.parse(elem)));
+        else resolve(data.map(elem => JSON.parse(elem)));
       });
     });
   }
 
   writeOne(data) {
     return new Promise((resolve, reject) => {
-      this.client.lpush(data.symbol, JSON.stringify(data), function (err) {
-        if (err) reject(err);
-        else resolve(data);
+      const client = this.client;
+      client.lpush(data.symbol, JSON.stringify(data), function (err) {
+        if (err) {
+          reject(err);
+        } else {
+          client.expire(data.symbol, 60, function (err) {
+            if (err) reject(err);
+            else resolve(data);
+          });
+        }
       });
     });
   }
