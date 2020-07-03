@@ -1,12 +1,12 @@
 import chai from 'chai';
-import CryptocurrencyMongodb from "../../../src/domain/repositories/mongodb/cryptocurrency.mongodb.js";
+import CryptocurrencyRedis from "../../../src/domain/repositories/redis/cryptocurrency.redis.js";
 
 describe("Testing mongodb connection", function () {
   it("Test if it inserts an element", function (done) {
-    const CMongodb = new CryptocurrencyMongodb();
-    CMongodb.connect()
+    const CRedis = new CryptocurrencyRedis();
+    CRedis.connect()
       .then(() => {
-        return CMongodb.writeOne({
+        return CRedis.writeOne({
           symbol: "BTC",
           price: 100.00,
           timestamp: new Date().toISOString()
@@ -15,14 +15,14 @@ describe("Testing mongodb connection", function () {
       .then((data) => {
         chai.expect(data).not.to.be.empty;
         chai.expect(data.symbol).to.be.eq("BTC");
-        return CMongodb.disconnect();
+        return CRedis.disconnect();
       })
       .then(() => {
         done();
       })
-      .catch(() => {
-        chai.assert.fail('Failed connection');
-        CMongodb.disconnect();
+      .catch((err) => {
+        chai.assert.fail(err);
+        CRedis.disconnect();
         done(1);
       });
   });
