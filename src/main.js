@@ -12,6 +12,7 @@ const router = express.Router();
 router.use(cors());
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({extended: true}));
+const port = process.env.BIT2ME_EXPRESS_PORT;
 
 // SWAGGER CONFIG
 router.use('/swagger', swaggerUi.serve);
@@ -25,8 +26,8 @@ const historical = new Historical(router, '/api/historical/:symbol');
 historical.configure('get');
 
 app.use('/', router);
-app.listen(3000, function () {
-  console.log('Example app listening on port 3000!');
+app.listen(port, function () {
+  console.log(`Example app listening on port ${port}!`);
 });
 
 console.log('Timestamp fetching prices');

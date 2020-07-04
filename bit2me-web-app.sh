@@ -1,0 +1,1 @@
+docker run -p 3000:8080 --name bit2me --env-file ./env  -d diegomgar/bit2me-web-app
