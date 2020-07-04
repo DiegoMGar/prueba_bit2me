@@ -9,34 +9,39 @@ export class CryptocurrencyInterval {
   }
 
   prepare() {
+    this.fetchAndSave();
     setInterval(() => {
-      this.fetchCurrency()
-        .then(data => {
-          console.log('Retrieved crypto', data.status.timestamp);
-          const mongoRepo = new CryptocurrencyMongodb();
-          mongoRepo.connect()
-            .then(() => {
-              const btc = {...data.data.BTC.quote.EUR};
-              btc.symbol = 'BTC';
-              const eth = {...data.data.ETH.quote.EUR};
-              eth.symbol = 'ETH';
-              return Promise.all([
-                mongoRepo.writeOne(btc),
-                mongoRepo.writeOne(eth)
-              ])
-            })
-            .then((results) => {
-              console.log('Prices written\n', JSON.stringify(results, null, 2));
-            })
-            .catch((err) => {
-              console.log('Error writing new prices');
-              console.log(err);
-            })
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      this.fetchAndSave();
     }, this.fetchIntervalSeconds * 1000);
+  }
+
+  fetchAndSave() {
+    this.fetchCurrency()
+      .then(data => {
+        console.log('Retrieved crypto', data.status.timestamp);
+        const mongoRepo = new CryptocurrencyMongodb();
+        mongoRepo.connect()
+          .then(() => {
+            const btc = {...data.data.BTC.quote.EUR};
+            btc.symbol = 'BTC';
+            const eth = {...data.data.ETH.quote.EUR};
+            eth.symbol = 'ETH';
+            return Promise.all([
+              mongoRepo.writeOne(btc),
+              mongoRepo.writeOne(eth)
+            ])
+          })
+          .then((results) => {
+            console.log('Prices written\n', JSON.stringify(results, null, 2));
+          })
+          .catch((err) => {
+            console.log('Error writing new prices');
+            console.log(err);
+          })
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   fetchCurrency() {

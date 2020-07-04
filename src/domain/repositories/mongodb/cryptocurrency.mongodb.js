@@ -2,10 +2,12 @@ import mongoose from 'mongoose';
 
 export default class CryptocurrencyMongodb {
   constructor() {
-    this.host = 'mongodb://192.168.99.100:27017/coinmarketcap'
+    const mongohost = process.env.BIT2ME_MONGOHOST;
+    this.host = `mongodb://${mongohost}:27017/coinmarketcap`
   }
 
   connect() {
+    console.log("trying to connect mongo", this.host)
     return mongoose.connect(this.host,
       {
         useNewUrlParser: true,

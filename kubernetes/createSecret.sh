@@ -1,0 +1,1 @@
+kubectl create secret generic bit2me-web-app --from-file=../.env

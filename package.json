@@ -5,7 +5,7 @@
   "main": "src/main.js",
   "scripts": {
     "start": "node -r dotenv/config src/main.js",
-    "test": "mocha test/**/*.spec.js"
+    "test": "mocha -r dotenv/config test/**/*.spec.js"
   },
   "repository": {
     "type": "git",

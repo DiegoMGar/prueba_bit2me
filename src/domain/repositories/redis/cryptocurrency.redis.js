@@ -3,7 +3,7 @@ import redis from 'redis';
 export default class CryptocurrencyRedis {
   constructor() {
     this.options = {
-      host: '192.168.99.100'
+      host: process.env.BIT2ME_REDISHOST
     }
   }
 

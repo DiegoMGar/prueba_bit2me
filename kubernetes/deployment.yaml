@@ -19,7 +19,24 @@ spec:
       containers:
         - name: mongo
           image: mongo
+          ports:
+            - containerPort: 27017
         - name: redis
           image: redis
+          ports:
+            - containerPort: 6379
         - name: web-app
           image: diegomgar/bit2me-web-app
+          env:
+            - name: BIT2ME_COINMARKETCAP_API_KEY
+              value: dummytext
+            - name: BIT2ME_SESUSER
+              value: dummytext
+            - name: BIT2ME_SESPASSWORD
+              value: dummytext
+            - name: BIT2ME_EXPRESS_PORT
+              value: "8080"
+            - name: BIT2ME_MONGOHOST
+              value: "mongo"
+            - name: BIT2ME_REDISHOST
+              value: "redis"
