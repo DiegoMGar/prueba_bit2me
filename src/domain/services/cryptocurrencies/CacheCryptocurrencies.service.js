@@ -1,4 +1,4 @@
-import CryptocurrencyRedis from "../../repositories/redis/cryptocurrency.redis.js";
+import CryptocurrencyRedis from '../../repositories/redis/cryptocurrency.redis.js';
 
 export class CacheCryptocurrenciesService {
   /**
@@ -7,8 +7,8 @@ export class CacheCryptocurrenciesService {
    * @param {string} symbol
    */
   readBySymbol(symbol) {
-    if (typeof symbol !== "string") {
-      throw Error("Symbol must be string");
+    if (typeof symbol !== 'string') {
+      throw Error('Symbol must be string');
     }
     const redisRepo = new CryptocurrencyRedis();
     return new Promise((resolve, reject) => {
@@ -31,11 +31,11 @@ export class CacheCryptocurrenciesService {
         return redisRepo.write(symbol, data);
       })
       .then(() => {
-        console.log("Data successfuly cached");
+        console.log('Data successfuly cached');
         redisRepo.disconnect();
       })
       .catch((err) => {
-        console.log("Error caching", err);
+        console.log('Error caching', err);
       });
   }
 }

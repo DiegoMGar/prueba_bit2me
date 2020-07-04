@@ -1,6 +1,6 @@
-import * as fs from "fs";
-import config from "./config.js"
-import path from "path";
+import * as fs from 'fs';
+import config from './config.js'
+import path from 'path';
 
 export class WriteFileRepository {
   put(table, data) {

@@ -10,10 +10,10 @@ export default class CryptocurrencyRedis {
   connect() {
     return new Promise((resolve, reject) => {
       this.client = redis.createClient(this.options);
-      this.client.on("error", function (error) {
+      this.client.on('error', function (error) {
         reject(error);
       });
-      this.client.on("ready", function () {
+      this.client.on('ready', function () {
         resolve();
       });
     });
@@ -22,7 +22,7 @@ export default class CryptocurrencyRedis {
   disconnect() {
     return new Promise((resolve) => {
       this.client.quit();
-      this.client.on("end", function () {
+      this.client.on('end', function () {
         resolve()
       });
     })

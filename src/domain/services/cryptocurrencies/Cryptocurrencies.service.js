@@ -1,10 +1,10 @@
-import {CacheCryptocurrenciesService} from "./CacheCryptocurrencies.service.js";
-import {MongoCryptocurrenciesService} from "./MongoCryptocurrencies.service.js";
+import {CacheCryptocurrenciesService} from './CacheCryptocurrencies.service.js';
+import {MongoCryptocurrenciesService} from './MongoCryptocurrencies.service.js';
 
 export class CryptocurrenciesService {
   readBySymbol(symbol) {
-    if (typeof symbol !== "string") {
-      throw Error("Symbol must be string");
+    if (typeof symbol !== 'string') {
+      throw Error('Symbol must be string');
     }
     const redisService = new CacheCryptocurrenciesService();
     const mongoService = new MongoCryptocurrenciesService();
@@ -17,7 +17,7 @@ export class CryptocurrenciesService {
         .then((data) => {
           if (data && data.length > 0) {
             result.data = data;
-            result.resolver = "redis";
+            result.resolver = 'redis';
             resolve(result);
           } else {
             return mongoService.readBySymbol(symbol);
@@ -25,7 +25,7 @@ export class CryptocurrenciesService {
         })
         .then((data) => {
           result.data = data;
-          result.resolver = "mongodb";
+          result.resolver = 'mongodb';
           resolve(result);
         })
         .catch((err) => reject(err));

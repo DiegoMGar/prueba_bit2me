@@ -1,4 +1,4 @@
-import {CryptocurrenciesService} from "../../../domain/services/cryptocurrencies/Cryptocurrencies.service.js";
+import {CryptocurrenciesService} from '../../../domain/services/cryptocurrencies/Cryptocurrencies.service.js';
 
 export class Historical {
   constructor(router, path) {
@@ -14,7 +14,7 @@ export class Historical {
     let symbol = request.params.symbol;
     if (!symbol) {
       response.status(400);
-      response.send({msg: "Symbol needed"});
+      response.send({msg: 'Symbol needed'});
       return;
     }
     symbol = symbol.toUpperCase();

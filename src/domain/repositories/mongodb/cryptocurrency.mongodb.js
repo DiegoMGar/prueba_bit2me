@@ -1,8 +1,8 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 export default class CryptocurrencyMongodb {
   constructor() {
-    this.host = "mongodb://192.168.99.100:27017/coinmarketcap"
+    this.host = 'mongodb://192.168.99.100:27017/coinmarketcap'
   }
 
   connect() {
@@ -59,7 +59,7 @@ export default class CryptocurrencyMongodb {
   readBySymbolElapsedTime(symbol, seconds) {
     const now = new Date();
     now.setTime(now.getTime() - (seconds * 1000));
-    console.log("Searching gte", now.toISOString());
+    console.log('Searching gte', now.toISOString());
     return this.find({symbol, last_updated: {$gte: now.toISOString()}})
       .then((data)=>{
         return Promise.resolve(data.map(elem=>elem.toObject()));

@@ -1,4 +1,4 @@
-import CryptocurrencyMongodb from "../../repositories/mongodb/cryptocurrency.mongodb.js";
+import CryptocurrencyMongodb from '../../repositories/mongodb/cryptocurrency.mongodb.js';
 
 export class MongoCryptocurrenciesService {
 
@@ -13,8 +13,8 @@ export class MongoCryptocurrenciesService {
    * @param {string} symbol
    */
   readBySymbol(symbol) {
-    if (typeof symbol !== "string") {
-      throw Error("Symbol must be string");
+    if (typeof symbol !== 'string') {
+      throw Error('Symbol must be string');
     }
     const mongoRepo = new CryptocurrencyMongodb();
     return new Promise((resolve, reject) => {

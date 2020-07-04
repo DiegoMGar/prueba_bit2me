@@ -1,20 +1,48 @@
 import fetch from 'node-fetch';
 import config from '../../config/coingmarketcap.config.js'
+import CryptocurrencyMongodb from "../repositories/mongodb/cryptocurrency.mongodb.js";
 
 
 export class CryptocurrencyInterval {
   constructor() {
     this.url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?';
+    this.fetchIntervalSeconds = 60;
   }
 
-  run(input) {
-    console.log("Using CryptocurrencyInterval");
-    return true;
+  prepare() {
+    setInterval(() => {
+      this.fetchCurrency()
+        .then(data => {
+          console.log('Retrieved crypto', data.status.timestamp);
+          const mongoRepo = new CryptocurrencyMongodb();
+          mongoRepo.connect()
+            .then(() => {
+              const btc = {...data.data.BTC.quote.EUR};
+              btc.symbol = 'BTC';
+              const eth = {...data.data.ETH.quote.EUR};
+              eth.symbol = 'ETH';
+              return Promise.all([
+                mongoRepo.writeOne(btc),
+                mongoRepo.writeOne(eth)
+              ])
+            })
+            .then((results) => {
+              console.log('Prices written\n', JSON.stringify(results, null, 2));
+            })
+            .catch((err) => {
+              console.log('Error writing new prices');
+              console.log(err);
+            })
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }, this.fetchIntervalSeconds * 1000);
   }
 
   fetchCurrency() {
     const params = {
-      symbol: "BTC,ETH",
+      symbol: 'BTC,ETH',
       convert: 'EUR',
     }
     let url = this.url;
@@ -32,7 +60,7 @@ export class CryptocurrencyInterval {
     return fetch(url, options)
       .then(response => {
         if (response.status.toString().startsWith('2')) return response.json();
-        throw Error("Error retrieving prices from coinmarketcap: " + response.status);
+        throw Error('Error retrieving prices from coinmarketcap: ' + response.status);
       });
   }
 }

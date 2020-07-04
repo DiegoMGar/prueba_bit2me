@@ -3,9 +3,9 @@ import swaggerDocument from './swagger/swagger.js';
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import {CryptocurrencyInterval} from "./domain/coinmarketcap/cryptocurrency.interval.js";
-import {Historical} from "./app/api/cryptocurrencies/historical.js";
-import CryptocurrencyMongodb from "./domain/repositories/mongodb/cryptocurrency.mongodb.js";
+import {CryptocurrencyInterval} from './domain/coinmarketcap/cryptocurrency.interval.js';
+import {Historical} from './app/api/cryptocurrencies/historical.js';
+import {Mailing} from "./domain/mailing/mailing.js";
 
 const app = express();
 const router = express.Router();
@@ -29,39 +29,10 @@ app.listen(3000, function () {
   console.log('Example app listening on port 3000!');
 });
 
-console.log("Timestamp fetching prices");
+console.log('Timestamp fetching prices');
 
 const cryptocurrencyInterval = new CryptocurrencyInterval();
-cryptoRequest();
+cryptocurrencyInterval.prepare();
 
-function cryptoRequest() {
-  setTimeout(() => {
-    cryptoRequest();
-  }, 60000);
-  cryptocurrencyInterval.fetchCurrency(1)
-    .then(data => {
-      console.log("Retrieved crypto", data.status.timestamp);
-      const mongoRepo = new CryptocurrencyMongodb();
-      mongoRepo.connect()
-        .then(() => {
-          const btc = {...data.data.BTC.quote.EUR};
-          btc.symbol = "BTC";
-          const eth = {...data.data.ETH.quote.EUR};
-          eth.symbol = "ETH";
-          return Promise.all([
-            mongoRepo.writeOne(btc),
-            mongoRepo.writeOne(eth)
-          ])
-        })
-        .then((results) => {
-          console.log("Prices written\n", JSON.stringify(results, null, 2));
-        })
-        .catch((err) => {
-          console.log("Error writing new prices");
-          console.log(err);
-        })
-    })
-    .catch(err => {
-      console.log(err);
-    });
-}
+const autoMailing = new Mailing();
+autoMailing.prepare();
