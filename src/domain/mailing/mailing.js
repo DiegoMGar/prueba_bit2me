@@ -65,15 +65,17 @@ export class Mailing {
   sendmailWithPrices() {
     return this.getBothDatasets()
       .then((data) => {
-        const bodyES = "<h3>Seguimiento de precios</h3>" +
+        const bodyTitle = "<p><em>Este correo es parte de la prueba técnica de Diego Maroto</em></p>" +
+          "<p><em>El código está en: <a href='https://github.com/DiegoMGar/prueba_bittome'>Repo Prueba Bit2me</a></em></p>";
+        const bodyES = "<h2>Seguimiento de precios</h2>" +
           "<p><b>Aquí tienes los precios del BTC y ETH en los últimos 100 minutos!</b></p>" +
           "<p>Si no quieres seguir recibiendo estos emails, lo sentimos, no te puedes desuscribir</p>" +
           "<p><small>Este email se ha generado de forma automática, no respondas.</small></p>";
-        const bodyEN = "<h3>Price tracking</h3>" +
+        const bodyEN = "<h2>Price tracking</h2>" +
           "<p><b>Here are the prices of BTC and ETH in the last 100 minutes!</b></p>" +
           "<p>If you do not want to continue receiving these emails, we are sorry, you cannot unsubscribe</p>" +
           "<p><small>This email has been generated automatically, do not reply.</small></p>";
-        const body = `${bodyES}<hr>${bodyEN}`;
+        const body = `${bodyTitle}<hr>${bodyES}<hr>${bodyEN}`;
         const from = 'Diego Maroto <info@reactivecloud.es>';
         const to = 'Bit2me dev test <dev-test@team.bit2me.com>';
         const cc = 'Diego Maroto <diego.diemg@gmail.com>';
