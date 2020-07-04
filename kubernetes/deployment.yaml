@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bit2me-deployment
+  labels:
+    name: bit2me-deployment
+    tier: bit2me-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      tier: bit2me-backend
+  template:
+    metadata:
+      name: bit2me-deployment
+      labels:
+        tier: bit2me-backend
+    spec:
+      containers:
+        - name: mongo
+          image: mongo
+        - name: redis
+          image: redis
+        - name: web-app
+          image: diegomgar/bit2me-web-app
