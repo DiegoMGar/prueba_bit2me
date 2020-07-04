@@ -9,7 +9,6 @@ describe("Testing mongodb connection", function () {
         return CRedis.readBySymbol("BTC")
       })
       .then((data) => {
-        console.log(data)
         chai.expect(data).to.be.an("array");
         chai.expect(data.length).to.be.greaterThan(0);
         chai.expect(data[0].symbol).to.be.eq("BTC");
@@ -19,7 +18,7 @@ describe("Testing mongodb connection", function () {
         done();
       })
       .catch((err) => {
-        chai.assert.fail(err);
+        console.log(err)
         done(1);
       })
   });

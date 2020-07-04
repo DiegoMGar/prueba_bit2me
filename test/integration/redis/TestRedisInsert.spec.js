@@ -6,15 +6,14 @@ describe("Testing mongodb connection", function () {
     const CRedis = new CryptocurrencyRedis();
     CRedis.connect()
       .then(() => {
-        return CRedis.write("BTC", {
+        return CRedis.write("BTC", [{
           symbol: "BTC",
           price: 100.00,
           timestamp: new Date().toISOString()
-        })
+        }])
       })
       .then((data) => {
         chai.expect(data).not.to.be.empty;
-        chai.expect(data.symbol).to.be.eq("BTC");
         return CRedis.disconnect();
       })
       .then(() => {
