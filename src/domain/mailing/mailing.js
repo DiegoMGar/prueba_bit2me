@@ -1,11 +1,10 @@
-import sesConfig from '../../config/ses.config.js';
 import nodemailer from 'nodemailer';
 import {CryptocurrenciesService} from "../services/cryptocurrencies/Cryptocurrencies.service.js";
 
 export class Mailing {
   constructor() {
-    this.user = sesConfig.sesUser;
-    this.pass = sesConfig.sesPass;
+    this.user = process.env.BIT2ME_SESUSER;
+    this.pass = process.env.BIT2ME_SESPASSWORD;
     this.mailIntervalSeconds = 60 * 60 * 2; // 2 horas
   }
 

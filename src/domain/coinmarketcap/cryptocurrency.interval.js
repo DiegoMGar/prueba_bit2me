@@ -1,5 +1,4 @@
 import fetch from 'node-fetch';
-import config from '../../config/coingmarketcap.config.js'
 import CryptocurrencyMongodb from "../repositories/mongodb/cryptocurrency.mongodb.js";
 
 
@@ -53,7 +52,7 @@ export class CryptocurrencyInterval {
     const options = {
       method: 'GET',
       headers: {
-        'X-CMC_PRO_API_KEY': config.api_key,
+        'X-CMC_PRO_API_KEY': process.env.BIT2ME_COINMARKETCAP_API_KEY,
         'Content-Type': 'application/json'
       }
     };
