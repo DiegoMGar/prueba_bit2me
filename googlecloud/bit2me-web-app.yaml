@@ -1,0 +1,43 @@
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "bit2me-web-app"
+  namespace: "default"
+  labels:
+    app: "bit2me-web-app"
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: "bit2me-web-app"
+  template:
+    metadata:
+      labels:
+        app: "bit2me-web-app"
+    spec:
+      containers:
+      - name: "redis-1"
+        image: "redis:latest"
+      - name: "mongo-2"
+        image: "mongo:latest"
+---
+apiVersion: "autoscaling/v2beta1"
+kind: "HorizontalPodAutoscaler"
+metadata:
+  name: "bit2me-web-app-hpa-rukm"
+  namespace: "default"
+  labels:
+    app: "bit2me-web-app"
+spec:
+  scaleTargetRef:
+    kind: "Deployment"
+    name: "bit2me-web-app"
+    apiVersion: "apps/v1"
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+  - type: "Resource"
+    resource:
+      name: "cpu"
+      targetAverageUtilization: 80
