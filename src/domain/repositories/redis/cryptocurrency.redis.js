@@ -30,21 +30,21 @@ export default class CryptocurrencyRedis {
 
   readBySymbol(symbol) {
     return new Promise((resolve, reject) => {
-      this.client.lrange(symbol, 0, 100, function (err, data) {
+      this.client.get(symbol, function (err, data) {
         if (err) reject(err);
-        else resolve(data.map(elem => JSON.parse(elem)));
+        else resolve(JSON.parse(data));
       });
     });
   }
 
-  writeOne(data) {
+  write(key, data) {
     return new Promise((resolve, reject) => {
       const client = this.client;
-      client.lpush(data.symbol, JSON.stringify(data), function (err) {
+      client.set(key, JSON.stringify(data), function (err) {
         if (err) {
           reject(err);
         } else {
-          client.expire(data.symbol, 60, function (err) {
+          client.expire(key, 60, function (err) {
             if (err) reject(err);
             else resolve(data);
           });
