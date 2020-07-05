@@ -25,6 +25,9 @@
 </head>
 <body>
 <div class="container">
+  <div class="alert alert-info" role="alert" id="alert"
+       style="margin-top: 3rem; margin-bottom: 5rem; display: none;"
+  ><h4 style="text-align: center;">Info refreshed</h4></div>
   <div id="chartContainerBTC"
        style="height: 370px; width: 100%; margin-top: 3rem; margin-bottom: 5rem;"
   ></div>
@@ -68,6 +71,11 @@
     });
 
     socket.addEventListener('message', function (event) {
+      const alertDiv = $("#alert");
+      alertDiv.slideDown("slow");
+      setInterval(() => {
+        alertDiv.slideUp();
+      }, 5000);
       const msg = JSON.parse(event.data);
       console.log('Message from server', msg);
       appendDataToChart(msg);
