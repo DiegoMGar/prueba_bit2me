@@ -77,6 +77,8 @@ Se usan @types/package para facilitar el autocompletado del IDE.
 
 ### Posibles mejoras
 
+- **La facilidad de programar y la velocidad que proporcionan los IDE modernos usando
+Typescript lo considero una ventaja.**
 - Las funcionalidades tan específicas, como el envío de emails automáticos o la recogida de datos deberían
 hacerse mediante workers o servicios desanidados del proceso principal.
 - La aproximación inicial que tomé es conexión y desconexión a la base de datos por cada consulta,

@@ -6,6 +6,7 @@ import cors from 'cors';
 import {CryptocurrencyInterval} from './domain/coinmarketcap/cryptocurrency.interval.js';
 import {Historical} from './app/api/cryptocurrencies/historical.js';
 import {Mailing} from "./domain/mailing/mailing.js";
+import {WebSocketManager} from "./domain/websockets/WebSocketManager.js";
 
 const app = express();
 const router = express.Router();
@@ -25,6 +26,9 @@ router.get('/', function (req, res) {
 const historical = new Historical(router, '/api/historical/:symbol');
 historical.configure('get');
 
+const webSocketManager = new WebSocketManager(app);
+webSocketManager.prepare();
+
 app.use('/', router);
 app.listen(port, function () {
   console.log(`Example app listening on port ${port}!`);
@@ -32,7 +36,7 @@ app.listen(port, function () {
 
 console.log('Timestamp fetching prices');
 
-const cryptocurrencyInterval = new CryptocurrencyInterval();
+const cryptocurrencyInterval = new CryptocurrencyInterval(webSocketManager);
 cryptocurrencyInterval.prepare();
 
 const autoMailing = new Mailing();

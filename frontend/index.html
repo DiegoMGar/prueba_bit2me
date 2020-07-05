@@ -1,6 +1,7 @@
-<!DOCTYPE>
+<!DOCTYPE html>
 <html lang="es">
 <head>
+  <meta charset="UTF-8">
   <title>Bit2me - Prueba</title>
   <!-- JQuery minified -->
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"
@@ -32,16 +33,22 @@
   ></div>
 </div>
 <script>
+  const backend = 'localhost:8080';
+  const charts = {
+    btc: null,
+    eth: null,
+  }
   $(function () {
+    webSockets();
     const datasets = [];
-    fetch('http://localhost:3000/api/historical/btc')
+    fetch(`http://${backend}/api/historical/btc`)
       .then(data => {
         return data.json()
       })
       .then((data) => {
         data.symbol = "BTC";
         datasets.push(data)
-        return fetch('http://localhost:3000/api/historical/eth')
+        return fetch(`http://${backend}/api/historical/eth`)
       })
       .then(data => {
         return data.json()
@@ -53,10 +60,38 @@
       });
   });
 
+  function webSockets() {
+    const socket = new WebSocket(`ws://${backend}/ws`);
+
+    socket.addEventListener('open', function () {
+      console.log("Connection open")
+    });
+
+    socket.addEventListener('message', function (event) {
+      const msg = JSON.parse(event.data);
+      console.log('Message from server', msg);
+      appendDataToChart(msg);
+    });
+  }
+
+  function appendDataToChart(data) {
+    data.forEach(elem => {
+      const symbol = elem.symbol;
+      const chart = charts[symbol.toLowerCase()];
+      const length = chart.options.data[0].dataPoints.length;
+      if (+elem.price.toFixed(2) !== chart.options.data[0].dataPoints[length - 1]) {
+        chart.options.data[0].dataPoints.push({
+          y: +elem.price.toFixed(2),
+          x: new Date(elem.last_updated)
+        });
+        chart.render();
+      }
+    });
+  }
+
   function makeCharts(datasets) {
-    debugger;
     datasets.forEach(dataset => {
-      makeChart(dataset.symbol, dataset.data.map(e => createDataObject(e)));
+      charts[dataset.symbol === "BTC" ? 'btc' : 'eth'] = makeChart(dataset.symbol, dataset.data.map(e => createDataObject(e)));
     })
   }
 
@@ -68,7 +103,6 @@
   }
 
   function makeChart(symbol, dataset) {
-    debugger;
     const chart = new CanvasJS.Chart(`chartContainer${symbol}`, {
       animationEnabled: true,
       theme: "light2",
@@ -85,6 +119,7 @@
       }]
     });
     chart.render();
+    return chart;
   }
 </script>
 </body>

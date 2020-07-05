@@ -3,9 +3,10 @@ import CryptocurrencyMongodb from "../repositories/mongodb/cryptocurrency.mongod
 
 
 export class CryptocurrencyInterval {
-  constructor() {
+  constructor(webSocketManager) {
     this.url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?';
     this.fetchIntervalSeconds = 60;
+    this.webSocketManager = webSocketManager;
   }
 
   prepare() {
@@ -32,7 +33,9 @@ export class CryptocurrencyInterval {
             ])
           })
           .then((results) => {
-            console.log('Prices written\n', JSON.stringify(results, null, 2));
+            console.log('Prices written');
+            console.log("Broadcasting");
+            this.webSocketManager.broadcast(results);
           })
           .catch((err) => {
             console.log('Error writing new prices');
