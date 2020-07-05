@@ -2,8 +2,8 @@
 
 Para el despliegue del cluster de Kubernetes de esta prueba técnica se ha usado Aws.  
 En la prueba se pide GCloud por capa gratuita, pero no soy elegible, y como Aws lo manejor mejor
-y tengo más controlados los precios, además de venirme bien como entranmiento, lo he llevado a cabo
-usando EKS [Amazon Elastic Kubernetes Service](https://aws.amazon.com/es/eks/)
+y tengo más controlados los precios, además de venirme bien como entranmiento.
+La prueba se ha resuelto usando EKS [Amazon Elastic Kubernetes Service](https://aws.amazon.com/es/eks/)
 
 Ha sido una práctica muy didáctica, me estoy preparando el examen
 de administrador de kubernetes de hace poco y aún no había puesto en práctica los conocimientos
