@@ -32,12 +32,15 @@ Durante la realización de esta prueba ningún sistema hardware ha sufrido daño
 
 La prueba se ha afrontado con las siguientes pautas:
 - Uso de git para la CI, master y ramas feature.
-- Node v14.5 con imports ES6
-- Swagger resuelto desde paquetería en /docs
+- Publicado en Github
+- Node `v14.5` con imports `ES6`
+- Swagger resuelto desde paquetería en `/docs`
 - Persistencia en mongo y redis usando docker
-- Mensajería por email usando SES de AWS
+- Mensajería por email usando `SES` de Aws
+- Cluster de kubernetes usando `Eks` de Aws
 - Websockets
-- Testing con chai
+- Testing con `chai`
+- Frontend resuelto desde `CloudFront`
 
 ## External api
 
@@ -47,4 +50,27 @@ La prueba se ha afrontado con las siguientes pautas:
 ### Misc
 
 Se usan @types/package para facilitar el autocompletado del IDE.
-- Instalados como dev dependency 
+- Instalados como dev dependency
+
+### Guía de uso
+- Instalar node y yarn
+- Crear un `.env` en raiz con los valores adecuados, ejemplo en `.env-example`
+- `yarn install` para instalar todas las dependencias
+- Para que la aplicación funcione con normalidad hace falta que estén disponibles **mongo** y **redis**.
+    - Posibilidad de tener docker en local o instalados
+        - Hay comandos de ayuda para arrancarlos con `docker` en la carpeta `docker/(mongo|redis)/*.docker.sh`
+    - Posibilidad de poner ip/url externas en `.env`
+- `mocha -r dotenv/config <ruta>/<ficherotest>.spec.js` para ejecutar un test en concreto
+- `mocha -r dotenv/config /test/**/*.spec.js` para ejecutar todos los test
+    - Si no está configurado el AwsCli y la cuenta tiene habilidato el SES no funcionará el mailing.
+- `yarn start` para arrancar la aplicación
+    - Usará el puerto que se le indique en `.env`
+- El servidor además de resolver api rest hace dos tareas específicas:
+    - Cada 60 segundos pide info a coinmarketcap y la almacena en mongo
+    - Cada 2 horas manda un email automático con los precios de los últimos 100 segundos.
+- El api rest está documentada con `swagger` en la ruta `/docs`
+- El frontend es un html independiente que puede abrirse directamente con el navegador.
+    - Hace una primera petición y carga los precios
+    - Queda a la espera de actualizarse por websocket.
+
+### Posibles mejoras

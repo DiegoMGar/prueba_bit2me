@@ -15,8 +15,8 @@ router.use(bodyParser.urlencoded({extended: true}));
 const port = process.env.BIT2ME_EXPRESS_PORT;
 
 // SWAGGER CONFIG
-router.use('/swagger', swaggerUi.serve);
-router.get('/swagger', swaggerUi.setup(swaggerDocument));
+router.use('/docs', swaggerUi.serve);
+router.get('/docs', swaggerUi.setup(swaggerDocument));
 
 router.get('/', function (req, res) {
   res.send({msg: 'Esta es la prueba técnica de Bit2me'});
