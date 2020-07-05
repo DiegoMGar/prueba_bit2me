@@ -45,7 +45,9 @@ La prueba se ha afrontado con las siguientes pautas:
 ## External api
 
 - coinmarketcap
-  - https://coinmarketcap.com/api/documentation/v1/
+  - [Top 100 Cryptocurrencies by Market Capitalization](https://coinmarketcap.com/api/documentation/v1/)
+- Canvasjs para gráficas en el frontend
+    - [CanvasJS Beautiful HTML5 Charts & Graphs](https://canvasjs.com/javascript-charts/)
 
 ### Misc
 
