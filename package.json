@@ -5,6 +5,10 @@
   "main": "src/main.js",
   "scripts": {
     "start": "node -r dotenv/config src/main.js",
+    "start:docker": "docker run -p 80:8080 --name bit2me --env-file .env -d diegomgar/bit2me-web-app",
+    "deploy:frontend": "aws s3 sync frontend s3://bit2me-web-app --delete",
+    "build:backend": "docker build -t diegomgar/bit2me-web-app .",
+    "deploy:backend": "docker push diegomgar/bit2me-web-app",
     "test": "mocha -r dotenv/config test/**/*.spec.js"
   },
   "repository": {
@@ -28,8 +32,7 @@
     "node-fetch": "^2.6.0",
     "nodemailer": "^6.4.10",
     "redis": "^3.0.2",
-    "swagger-ui-express": "^4.1.4",
-    "uuid": "^8.2.0"
+    "swagger-ui-express": "^4.1.4"
   },
   "devDependencies": {
     "@types/chai": "^4.2.11",
