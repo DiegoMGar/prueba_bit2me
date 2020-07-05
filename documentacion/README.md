@@ -11,13 +11,13 @@ en cloud. También me estoy preparando el examen de arquitecto de Aws y
 conocía EKS sólo de forma teórica.  
 
 Adjunto evidencia guiada del arranque, configuración, despliegue y funcionamiento del cluster.
-- Kube Plane desplegado con un nodo disponible [Node01 - EKS](documentacion/node01andec2.png)
-- Deployments, Services y Webapp log, funcionando y conectando [Deployments en terminal](documentacion/servicesandlogs.png)
-- NodePort configurado para exponer la webapp a internet [NodePort](documentacion/NodePortservice.png)
-- Dashboard de ec2 para ver la coincidencia de tipo instancia y usar dns pública [EC2 Instance](documentacion/ec2andpublicdns.png)
-- Petición a raiz de la webapp para comprobar respuesta [Raiz webapp](documentacion/peticionwebraiz.png)
-- Petición de precios resuelve mongo, no hay caché [Resuelve mongo](documentacion/mongoresolver.png)
-- Petición de precios resuelve redis, hay caché [Resuelve redis](documentacion/redisresolver.png)
+- Kube Plane desplegado con un nodo disponible [Node01 - EKS](node01andec2.png)
+- Deployments, Services y Webapp log, funcionando y conectando [Deployments en terminal](servicesandlogs.png)
+- NodePort configurado para exponer la webapp a internet [NodePort](NodePortservice.png)
+- Dashboard de ec2 para ver la coincidencia de tipo instancia y usar dns pública [EC2 Instance](ec2andpublicdns.png)
+- Petición a raiz de la webapp para comprobar respuesta [Raiz webapp](peticionwebraiz.png)
+- Petición de precios resuelve mongo, no hay caché [Resuelve mongo](mongoresolver.png)
+- Petición de precios resuelve redis, hay caché [Resuelve redis](redisresolver.png)
 
 Tumbé el cluster para que no suba el coste, la app con 3 las imágenes docker estará funcionando
 toda la semana en una instancia mucho más económica que la necesaria para hacer usable eks.
