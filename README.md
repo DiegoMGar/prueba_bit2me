@@ -76,3 +76,27 @@ Se usan @types/package para facilitar el autocompletado del IDE.
     - Queda a la espera de actualizarse por websocket.
 
 ### Posibles mejoras
+
+- Las funcionalidades tan específicas, como el envío de emails automáticos o la recogida de datos deberían
+hacerse mediante workers o servicios desanidados del proceso principal.
+- La aproximación inicial que tomé es conexión y desconexión a la base de datos por cada consulta,
+no es óptimo, es mucho más eficiente una conexión para todos y desconectar en caso de un delay sin uso.
+- Los websockets son un problema para aplicaciones con mucha afluencia de usuarios, se podría hacer una
+aproximación a esta funcionalidad por streams usando EventSources en un worker específico.
+    - [MDN EventSource Reference](https://developer.mozilla.org/es/docs/Web/API/EventSource)
+- Dockerizar bases de datos puede ser un error de arquitectura, hay una discusión muy amplia en la comunidad sobre
+los peligros de dockerizar bases de datos y las complicaciones de las copias de seguridad y lo tedioso de las réplicas
+y la alta disponibilidad.
+    - Si la solución va a ser full cloud, sería muy interesante usar bases de datos como servicios del cloud
+    en lugar de reinventar la rueda.
+    - [Amazon Redshift](https://aws.amazon.com/es/redshift/)
+    - [Amazon Aurora](https://aws.amazon.com/es/rds/aurora/)
+    - [Amazon DynamoDB](https://aws.amazon.com/es/dynamodb/) *serverless*
+    - [Amazon ElastiCache](https://aws.amazon.com/es/elasticache/) *redis*
+- 60 segundos de caducidad de caché apostaría por que es poco, podría ser interesante que el caché tardase más en
+caducar y que el worker que vuelca a mongo publicase también, si el caché está en tiempo de uso, esos datos a caché.
+    - Un flag que marca que el caché se considera demandado.
+    - El worker actualiza mongo y, si el flag lo indica, redis.
+- Https desde node con express es un poco tedioso de más, en mi experiencia, puede ser más sencillo un proxy con ngix y que
+el servicio de api esté en redes privadas por http, usar un [Amazon API Gateway](https://aws.amazon.com/es/api-gateway/)
+o un balanceador en caso de escalabilidad horizontal.
