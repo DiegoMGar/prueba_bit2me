@@ -9,7 +9,7 @@ Desplegado en un **Aws EC2 t2.nano de París**
     - [Histórico BTC](http://ec2-15-236-212-50.eu-west-3.compute.amazonaws.com/api/historical/btc)
     - [Histórico ETh](http://ec2-15-236-212-50.eu-west-3.compute.amazonaws.com/api/historical/eth)
 - [Frontend](http://bit2me-web-app.s3.amazonaws.com)
-- [Cluster Kubernetes](eks)
+- [Cluster Kubernetes (Aws EKS)](eks)
 
 ## Introducción
 Durante la realización de esta prueba ningún sistema hardware ha sufrido daño alguno.  
