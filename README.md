@@ -1,6 +1,16 @@
 # prueba_bittome
 Prueba técnica de Bit2me
 
+## Estado
+Prueba técnica finalizada.  
+Desplegado en un **Aws EC2 t2.nano de París**
+- [Backend](http://ec2-15-236-212-50.eu-west-3.compute.amazonaws.com)
+    - [Swagger](http://ec2-15-236-212-50.eu-west-3.compute.amazonaws.com/docs)
+    - [Histórico BTC](http://ec2-15-236-212-50.eu-west-3.compute.amazonaws.com/api/historical/btc)
+    - [Histórico ETh](http://ec2-15-236-212-50.eu-west-3.compute.amazonaws.com/api/historical/eth)
+- [Frontend](http://bit2me-web-app.s3.amazonaws.com)
+- [Cluster Kubernetes](documentacion)
+
 ## Introducción
 Durante la realización de esta prueba ningún sistema hardware ha sufrido daño alguno.  
 - Se ha llevado a cabo desarrollando en win10home + webstorm + dockerToolbox  
@@ -61,10 +71,12 @@ Se usan @types/package para facilitar el autocompletado del IDE.
 - Para que la aplicación funcione con normalidad hace falta que estén disponibles **mongo** y **redis**.
     - Posibilidad de tener docker en local o instalados
         - Hay comandos de ayuda para arrancarlos con `docker` en la carpeta `docker/(mongo|redis)/*.docker.sh`
+        - *Conectar contenedores añadiendo alias a la network es mucho más sencillo.*
     - Posibilidad de poner ip/url externas en `.env`
+    - El comando `yarn run start:docker` usa la network `bit2me-network` y el fichero `.env` de la carpeta raiz
 - `mocha -r dotenv/config <ruta>/<ficherotest>.spec.js` para ejecutar un test en concreto
 - `mocha -r dotenv/config /test/**/*.spec.js` para ejecutar todos los test
-    - Si no está configurado el AwsCli y la cuenta tiene habilidato el SES no funcionará el mailing.
+    - Si no está configurado el AwsCli y la cuenta tiene habilitado el SES, no funcionará el mailing.
 - `yarn start` para arrancar la aplicación
     - Usará el puerto que se le indique en `.env`
 - El servidor además de resolver api rest hace dos tareas específicas:
