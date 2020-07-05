@@ -22,7 +22,9 @@ export class Historical {
     cryptoService.readBySymbol(symbol)
       .then((result) => {
         response.send(result);
-        this.cachingTheResponse(symbol, result.data);
+        if (result.resolver === 'mongodb') {
+          this.cachingTheResponse(symbol, result.data);
+        }
       })
       .catch((err) => {
         console.log(err);

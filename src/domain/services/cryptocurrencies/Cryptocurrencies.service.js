@@ -16,7 +16,7 @@ export class CryptocurrenciesService {
       redisService.readBySymbol(symbol)
         .then((data) => {
           if (data && data.length > 0) {
-            result.data = data;
+            result.data = data.map(this.cleanData);
             result.resolver = 'redis';
             resolve(result);
           } else {
@@ -24,12 +24,21 @@ export class CryptocurrenciesService {
           }
         })
         .then((data) => {
-          result.data = data;
+          result.data = data.map(this.cleanData);
           result.resolver = 'mongodb';
           resolve(result);
         })
         .catch((err) => reject(err));
     });
+  }
+
+  cleanData(elem) {
+    return {
+      symbol: elem.symbol,
+      price: elem.price,
+      last_updated: elem.last_updated,
+      market_cap: elem.market_cap,
+    }
   }
 
   cacheSymbol(symbol, data) {
