@@ -8,7 +8,7 @@ Desplegado en un **Aws EC2 t2.nano de París**
     - [Swagger](http://ec2-15-236-212-50.eu-west-3.compute.amazonaws.com/docs)
     - [Histórico BTC](http://ec2-15-236-212-50.eu-west-3.compute.amazonaws.com/api/historical/btc)
     - [Histórico ETh](http://ec2-15-236-212-50.eu-west-3.compute.amazonaws.com/api/historical/eth)
-- [Frontend](http://bit2me-web-app.s3.amazonaws.com)
+- [Frontend](http://dcgf24ri60ypn.cloudfront.net)
 - [Cluster Kubernetes (Aws EKS)](eks)
 
 ## Introducción
@@ -111,6 +111,6 @@ y la alta disponibilidad.
 caducar y que el worker que vuelca a mongo publicase también, si el caché está en tiempo de uso, esos datos a caché.
     - Un flag que marca que el caché se considera demandado.
     - El worker actualiza mongo y, si el flag lo indica, redis.
-- Https desde node con express es un poco tedioso de más, en mi experiencia, puede ser más sencillo un proxy con ngix y que
+- Https desde node con express es un poco tedioso de más, en mi experiencia, puede ser más sencillo un proxy con nginx y que
 el servicio de api esté en redes privadas por http, usar un [Amazon API Gateway](https://aws.amazon.com/es/api-gateway/)
 o un balanceador en caso de escalabilidad horizontal.
