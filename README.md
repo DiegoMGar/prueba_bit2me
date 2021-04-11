@@ -1,4 +1,4 @@
-# prueba_bittome
+# prueba_bit2me
 Prueba técnica de Bit2me
 
 ## Estado
